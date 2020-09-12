@@ -8,7 +8,7 @@
         <div>Current temperature: <span id="temp"></span>C (recorded at: <span id="time"></span>)</div>
         <script>
                 var request = new XMLHttpRequest();
-                request.open('GET', '/latest.json', true);
+                request.open('GET', 'latest.json', true);
 
                 request.onload = function() {
                     data = JSON.parse(this.response);
