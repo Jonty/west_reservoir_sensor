@@ -7,17 +7,28 @@
         <h1>West Reservoir Sensor</h1>
         <div>Current temperature: <span id="temp"></span>C (recorded at: <span id="time"></span>)</div>
         <script>
+            function fetchdata(){
                 var request = new XMLHttpRequest();
                 request.open('GET', 'latest.json', true);
 
                 request.onload = function() {
-                    data = JSON.parse(this.response);
+                    if (this.status == 200) {
+                        data = JSON.parse(this.response);
+                        document.getElementById("temp").innerHTML = data[data.length-1]["TempC1"]
+                        document.getElementById("time").innerHTML = data[data.length-1]["time"]
+                    }
 
-                    document.getElementById("temp").innerHTML = data[data.length-1]["TempC1"]
-                    document.getElementById("time").innerHTML = data[data.length-1]["time"]
+                    setTimeout(fetchdata, 60*1000);
+                };
+
+                request.onerror = function() {
+                    setTimeout(fetchdata, 60*1000);
                 };
 
                 request.send();
+            }
+
+            fetchdata();
         </script>
     </body>
 </html>
