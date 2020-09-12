@@ -1,0 +1,26 @@
+name: Fetch and Deploy
+on: 
+  push:
+  schedule:
+    - cron: '*/10 * * * *'
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Fetch
+        run: |
+          curl -X GET --header 'Accept: application/json' --header "Authorization: key $AUTH" 'https://west_reservoir_sensor.data.thethingsnetwork.org/api/v2/query/west_reservoir_sensor?last=1h' > latest.json
+        with:
+          AUTH: ${{ secrets.AUTH }}
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GIT_CONFIG_NAME: westreservoirsensor
+          GIT_CONFIG_EMAIL: jonty@jonty.co.uk
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: output
