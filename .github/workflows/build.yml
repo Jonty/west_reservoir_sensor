@@ -14,7 +14,7 @@ jobs:
       - name: Fetch
         run: |
           curl -X GET --header 'Accept: application/json' --header "Authorization: key $AUTH" 'https://west_reservoir_sensor.data.thethingsnetwork.org/api/v2/query/west_reservoir_sensor?last=1h' > latest.json
-        with:
+        env:
           AUTH: ${{ secrets.AUTH }}
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
