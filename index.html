@@ -9,7 +9,7 @@
         <script>
             function fetchdata(){
                 var request = new XMLHttpRequest();
-                request.open('GET', 'latest.json', true);
+                request.open('GET', 'latest.json?' + new Date().getTime(), true);
 
                 request.onload = function() {
                     if (this.status == 200) {
