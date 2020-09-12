@@ -1,0 +1,24 @@
+
+<html>
+    <head>
+        <title>West Reservoir Sensor</title>
+    </head>
+    <body>
+        <h1>West Reservoir Sensor</h1>
+        <div>Current temperature: <span id="temp"></span>C (recorded at: <span id="time"></span>)</div>
+        <script>
+                var request = new XMLHttpRequest();
+                request.open('GET', '/latest.json', true);
+
+                request.onload = function() {
+                    data = JSON.parse(this.response);
+
+                    document.getElementById("temp").innerHTML = data[data.length-1]["TempC1"]
+                    document.getElementById("time").innerHTML = data[data.length-1]["time"]
+                };
+
+                request.send();
+        </script>
+    </body>
+</html>
+
