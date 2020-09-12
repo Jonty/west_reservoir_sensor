@@ -13,7 +13,9 @@ jobs:
           persist-credentials: false
       - name: Fetch
         run: |
-          curl -X GET --header 'Accept: application/json' --header "Authorization: key $AUTH" 'https://west_reservoir_sensor.data.thethingsnetwork.org/api/v2/query/west_reservoir_sensor?last=1h' > latest.json
+          mkdir output
+          cp index.html output/
+          curl -X GET --header 'Accept: application/json' --header "Authorization: key $AUTH" 'https://west_reservoir_sensor.data.thethingsnetwork.org/api/v2/query/west_reservoir_sensor?last=1h' > output/latest.json
         env:
           AUTH: ${{ secrets.AUTH }}
       - name: Deploy
@@ -23,4 +25,4 @@ jobs:
           GIT_CONFIG_EMAIL: jonty@jonty.co.uk
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: .
+          FOLDER: output
